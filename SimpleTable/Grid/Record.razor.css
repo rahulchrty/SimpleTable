@@ -1,8 +1,10 @@
 .tr {
     display: flex;
+    height:25px;
 }
 
-.bordered > div {
+.bordered > div > div {
+    border-left: 0.08em solid #808080;
     border-bottom: 0.08em solid #808080;
 }
 

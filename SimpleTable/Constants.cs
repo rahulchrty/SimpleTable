@@ -14,10 +14,12 @@
         internal const string Striped = "striped";
         internal const string Borderless = "borderless";
         internal const string BasicBorder = "basic-border";
+        internal const string Scrollable = "scroll";
         #endregion
 
         #region Header
         internal const string HeaderBackground = "hbg";
+        internal const string Fixed = "fixed";
         #endregion
 
         #region Record

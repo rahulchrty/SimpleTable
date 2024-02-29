@@ -3,6 +3,6 @@
     padding:0.1em;
 }
 
-.bordered > div > div {
+.bordered > div > div > div {
     border-right: 0.08em solid #808080;
 }
