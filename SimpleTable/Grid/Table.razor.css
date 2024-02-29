@@ -1,3 +1,11 @@
 .container {
     contain: size style layout;
 }
+
+.basic-border {
+}
+
+.bordered {
+    border-top: 0.08em solid #808080;
+    border-left: 0.08em solid #808080;
+}

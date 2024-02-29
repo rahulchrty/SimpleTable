@@ -1,3 +1,8 @@
 .tc {
     flex: 1 1 0px;
+    padding:0.1em;
+}
+
+.bordered > div > div {
+    border-right: 0.08em solid #808080;
 }

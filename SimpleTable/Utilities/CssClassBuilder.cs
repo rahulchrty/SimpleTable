@@ -7,14 +7,24 @@ namespace SimpleTable.Utilities
         #region Fields
         private Action _cssClassMethod;
         private StringBuilder _classBuilder = new();
+        private Dictionary<string, bool> _classBuilderDictionary = new();
         #endregion Fields
 
         #region Properties
-        internal string GetClassNames { get 
+        internal string GetClassNames
+        {
+            get
             {
-                this._cssClassMethod();
-                return this._classBuilder.ToString().TrimEnd();
-            } 
+                _cssClassMethod();
+                foreach (var eachBuilder in _classBuilderDictionary)
+                {
+                    if (eachBuilder.Value)
+                    {
+                        _ = _classBuilder.Append(eachBuilder.Key).Append(Constants.CssDelemeter);
+                    }
+                }
+                return _classBuilder.ToString().TrimEnd();
+            }
         }
         #endregion Properties
 
@@ -26,11 +36,18 @@ namespace SimpleTable.Utilities
         #endregion Constructor
 
         #region Methods
-        internal void Append(string cssClassName)
+        internal void SetCssClass(string cssClassName, bool isRequired)
         {
             if (!string.IsNullOrWhiteSpace(cssClassName))
             {
-                _classBuilder.Append(cssClassName).Append(Constants.CssDelemeter);
+                if (!_classBuilderDictionary.ContainsKey(cssClassName))
+                {
+                    _classBuilderDictionary.Add(cssClassName, isRequired);
+                }
+                else
+                {
+                    _classBuilderDictionary[cssClassName] = isRequired;
+                }
             }
         }
         #endregion Methods

@@ -1,3 +1,11 @@
 .tr {
     display: flex;
 }
+
+.bordered > div {
+    border-bottom: 0.08em solid #808080;
+}
+
+.basic-border > div {
+    border-bottom: 0.08em solid #808080;
+}
