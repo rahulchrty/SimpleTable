@@ -1,0 +1,12 @@
+table {
+    width: 100%;
+    max-width: 100%;
+    border-spacing: 0;
+}
+.bordered {
+    border: 0.8px solid #b7b7b7;
+}
+
+.scroll > table.bordered {
+    border-top: none;
+}

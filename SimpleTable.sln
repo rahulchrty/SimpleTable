@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTable.TestApp", "SimpleTable.TestApp\SimpleTable.TestApp.csproj", "{557A0650-245D-4B8C-9C81-21C95CA7803F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTable.TestApp", "SimpleTable.TestApp\SimpleTable.TestApp.csproj", "{557A0650-245D-4B8C-9C81-21C95CA7803F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTable", "SimpleTable\SimpleTable.csproj", "{F21DCA82-8DF2-4A7D-B88F-9F3CE4A53CD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTable", "SimpleTable\SimpleTable.csproj", "{F21DCA82-8DF2-4A7D-B88F-9F3CE4A53CD0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TableDemo", "TableDemo", "{A0BCCE1A-6DE2-4BFC-91CC-6F4A6DF2EAA9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{F248C9DC-FD86-48FA-B1EB-27AE890834F0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{49F8D880-9B14-43FD-9F9B-D0D94421E6D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +30,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{557A0650-245D-4B8C-9C81-21C95CA7803F} = {49F8D880-9B14-43FD-9F9B-D0D94421E6D2}
+		{F21DCA82-8DF2-4A7D-B88F-9F3CE4A53CD0} = {F248C9DC-FD86-48FA-B1EB-27AE890834F0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {16941C2F-E337-46DF-A91D-3E0C022296BD}

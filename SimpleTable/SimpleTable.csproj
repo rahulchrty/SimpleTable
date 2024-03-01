@@ -16,7 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\" />
+    <Folder Include="AutoTable\" />
+    <Folder Include="Base\" />
   </ItemGroup>
 
 </Project>

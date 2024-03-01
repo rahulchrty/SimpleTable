@@ -1,7 +1,52 @@
 ﻿@page "/"
+@using SimpleTable
 
-<PageTitle>Home</PageTitle>
+@*
+    1. 200% zoom issue - done
+    2. Seperate the container - done
+    3. Rename the components - done
+    4. Scrollable size parameter for the table height - done
+    5. Header text position - done
+    6. Clickable row (- propagated cell click)
+    7. Clickable cell
+    8. Filters
+    9. Local data source with pagination
+    10. Remote data source with pagination
+    11. Srinkable columns
+    12. Fixed Columns
+    13. Convert to html table - done
+    14. Auto table
+    15. Why inject as service
+    16. User defined filters
+    17. Nuget package
+    18. Common css file
+    19. Fix scroll - done
+    20. Convert em to px - done
+*@
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+<Table Bordered Scrollable="400px">
+    <THead>
+        <Tr>
+            <Th>Index</Th>
+            <Th>Header 2</Th>
+            <Th>Header 3</Th>
+            <Th>Header 4</Th>
+            <Th>Header 5</Th>
+            <Th>Header 6</Th>
+        </Tr>
+    </THead>
+    <TBody>
+        @for (int i = 0; i < 50; i++)
+        {
+            var index = i + 1;
+            <Tr>
+                <Td>@index</Td>
+                <Td>w</Td>
+                <Td>z</Td>
+                <Td>x</Td>
+                <Td>a</Td>
+                <Td>v</Td>
+            </Tr>
+        }
+    </TBody>
+</Table>

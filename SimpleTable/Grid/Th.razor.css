@@ -1,0 +1,22 @@
+th {
+    font-weight: inherit;
+    box-sizing:inherit;
+}
+table.basic-border > thead > tr > th {
+    border-bottom: 1.6px solid #b7b7b7;
+}
+table.bordered > thead > tr > th {
+    border: 0.8px solid #b7b7b7;
+}
+.scroll > table.bordered > thead > tr > th {
+    border-top: 1.6px solid #b7b7b7;
+    border-bottom: 1.6px solid #b7b7b7;
+}
+.scroll > table.basic-border > thead > tr > th,
+.scroll > table > thead > tr > th,
+.scroll > table.bordered > thead > tr > th {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 1;
+}

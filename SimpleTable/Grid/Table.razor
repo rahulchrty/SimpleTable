@@ -1,0 +1,28 @@
+@namespace SimpleTable
+
+@if (!string.IsNullOrWhiteSpace(_isScrollable))
+{
+    <div class="@Constants.Scrollable">
+        @_tableTemplate
+    </div>
+}
+else
+{
+    @_tableTemplate
+}
+
+@code {
+    private RenderFragment _tableTemplate => __builder =>
+    {
+        <table class="@_classes">@ChildContent</table>
+    };
+}
+
+<style>
+    .scroll {
+        height: @_isScrollable;
+        max-height: @_isScrollable;
+        overflow: auto;
+        box-sizing: border-box;
+    }
+</style>
