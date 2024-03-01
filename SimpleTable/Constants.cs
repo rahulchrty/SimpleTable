@@ -12,7 +12,6 @@
         internal const string Container = "container";
         internal const string Bordered = "bordered";
         internal const string Striped = "striped";
-        //internal const string Borderless = "borderless";
         internal const string BasicBorder = "basic-border";
         internal const string Scrollable = "scroll";
         #endregion

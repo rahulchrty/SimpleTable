@@ -46,9 +46,7 @@ namespace SimpleTable
             CssBordered();
             CssBorderless();
             CssStriped();
-            //CssScrollable();
         }
-
         private void CssDefault()
         {
             if (_isBasicBorder)
@@ -90,13 +88,6 @@ namespace SimpleTable
             if (_isStriped)
             {
                 _classBuilder.SetCssClass(Constants.Striped, _isStriped);
-            }
-        }
-        private void CssScrollable()
-        {
-            if (_isScrollable)
-            {
-                _classBuilder.SetCssClass(Constants.Scrollable, _isScrollable);
             }
         }
         #endregion Methods

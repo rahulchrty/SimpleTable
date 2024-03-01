@@ -1,7 +1,19 @@
 @namespace SimpleTable
 
-<div class="scroll">
-    <table class="@_classes">
-        @ChildContent
-    </table>
-</div>
+@if (_isScrollable)
+{
+    <div class="@Constants.Scrollable">
+        @_tableTemplate
+    </div>
+}
+else
+{
+    @_tableTemplate
+}
+
+@code {
+    private RenderFragment _tableTemplate => __builder =>
+    {
+        <table class="@_classes">@ChildContent</table>
+    };
+}
