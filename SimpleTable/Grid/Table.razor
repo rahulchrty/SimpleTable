@@ -1,6 +1,6 @@
 @namespace SimpleTable
 
-@if (_isScrollable)
+@if (!string.IsNullOrWhiteSpace(_isScrollable))
 {
     <div class="@Constants.Scrollable">
         @_tableTemplate
@@ -17,3 +17,12 @@ else
         <table class="@_classes">@ChildContent</table>
     };
 }
+
+<style>
+    .scroll {
+        height: @_isScrollable;
+        max-height: @_isScrollable;
+        overflow: auto;
+        box-sizing: border-box;
+    }
+</style>

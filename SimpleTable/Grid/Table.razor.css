@@ -4,15 +4,9 @@ table {
     border-spacing: 0;
 }
 .bordered {
-    border: 0.05em solid #b7b7b7;
-}
-.scroll {
-    height: 300px;
-    max-height: 300px;
-    overflow: auto;
-    box-sizing: border-box;
+    border: 0.8px solid #b7b7b7;
 }
 
-.scroll > .bordered {
+.scroll > table.bordered {
     border-top: none;
 }
