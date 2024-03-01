@@ -14,7 +14,7 @@ else
 @code {
     private RenderFragment _tableTemplate => __builder =>
     {
-        <table class="@_classes">@ChildContent</table>
+        <table id="@Id" class="@_classes" style="@Style">@ChildContent</table>
     };
 }
 

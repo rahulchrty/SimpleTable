@@ -1,5 +1,5 @@
 .striped > tbody > tr:nth-child(1n) {
-    background-color: #eaf2ff;
+    background-color: #f7f7f7;
 }
 .striped > tbody > tr:nth-child(2n) {
     background-color: #ffffff;

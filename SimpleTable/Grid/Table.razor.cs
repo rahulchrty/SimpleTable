@@ -8,7 +8,6 @@ namespace SimpleTable
         #region Fields
         private CssClassBuilder _classBuilder {  get; set; }
         private string _classes => _classBuilder.GetClassNames;
-        private string _cssClass { get;set; } = string.Empty;
         private bool _isBasicBorder { get; set; } = true;
         private bool _isBordered { get; set; }
         private bool _isBorderless { get; set; }
@@ -20,7 +19,11 @@ namespace SimpleTable
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
         [Parameter]
-        public string CssClass { get { return _cssClass; } set { _cssClass = value; } }
+        public string Id { get; set; } = string.Empty;
+        [Parameter]
+        public string Style { get; set; } = string.Empty;
+        [Parameter]
+        public string Class { get; set; } = string.Empty;
         [Parameter]
         public bool Bordered { get { return _isBordered; } set { _isBordered = value; } }
         [Parameter]
@@ -56,9 +59,9 @@ namespace SimpleTable
         }
         private void CssExternalClass()
         {
-            if (!string.IsNullOrWhiteSpace(_cssClass))
+            if (!string.IsNullOrWhiteSpace(Class))
             {
-                _classBuilder.SetCssClass(_cssClass.Trim(), true);
+                _classBuilder.SetCssClass(Class.Trim(), true);
             }
         }
         private void CssBordered()

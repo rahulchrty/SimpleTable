@@ -2,11 +2,6 @@
 {
     internal class Constants
     {
-        #region Common
-        internal const string Tr = "tr";
-        internal const string Tc = "tc";
-        #endregion
-
         #region Table
         internal const string CssDelemeter = " ";
         internal const string Container = "container";
@@ -18,7 +13,6 @@
 
         #region Header
         internal const string HeaderBackground = "hbg";
-        internal const string Fixed = "fixed";
         #endregion
 
         #region Record
