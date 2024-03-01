@@ -1,27 +1,25 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SimpleTable.Utilities;
 
-namespace SimpleTable.Grid
+namespace SimpleTable
 {
-    public partial class HCell
+    public partial class TBody
     {
         #region Fields
         private CssClassBuilder _classBuilder { get; set; }
         private string _classes => _classBuilder.GetClassNames;
-        private bool _isFixedColumn { get; set; }
+        private string _cssClass { get; set; } = string.Empty;
         #endregion Fields
 
         #region Properties
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
         [Parameter]
-        public string CssClass { get; set; } = string.Empty;
-        [Parameter]
-        public bool FixedColumn { get { return _isFixedColumn; } set { _isFixedColumn = value; } }
+        public string CssClass { get { return _cssClass; } set { _cssClass = value; } }
         #endregion Properties
 
         #region Constructor
-        public HCell()
+        public TBody()
         {
             _classBuilder = new(AddCssClasses);
         }
@@ -30,19 +28,13 @@ namespace SimpleTable.Grid
         #region Methods
         public void AddCssClasses()
         {
-            CssDefault();
-            CssExternalClass();
-        }
-
-        private void CssDefault()
-        {
-            _classBuilder.SetCssClass(Constants.Tc, true);
+            //CssExternalClass();
         }
         private void CssExternalClass()
         {
-            if (!string.IsNullOrWhiteSpace(CssClass))
+            if (!string.IsNullOrWhiteSpace(_cssClass))
             {
-                _classBuilder.SetCssClass(CssClass.Trim(), true);
+                _classBuilder.SetCssClass(_cssClass.Trim(), true);
             }
         }
         #endregion Methods

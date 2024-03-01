@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SimpleTable.Utilities;
 
-namespace SimpleTable.Grid
+namespace SimpleTable
 {
-    public partial class Record
+    public partial class Td
     {
         #region Fields
         private CssClassBuilder _classBuilder { get; set; }
@@ -18,7 +18,7 @@ namespace SimpleTable.Grid
         #endregion Properties
 
         #region Constructor
-        public Record()
+        public Td()
         {
             _classBuilder = new(AddCssClasses);
         }
@@ -27,13 +27,13 @@ namespace SimpleTable.Grid
         #region Methods
         public void AddCssClasses()
         {
-            CssDefault();
-            CssExternalClass();
+            //CssDefault();
+            //CssExternalClass();
         }
 
         private void CssDefault()
         {
-            _classBuilder.SetCssClass(Constants.Tr, true);
+            _classBuilder.SetCssClass(Constants.Tc, true);
         }
         private void CssExternalClass()
         {

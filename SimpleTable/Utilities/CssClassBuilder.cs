@@ -31,7 +31,7 @@ namespace SimpleTable.Utilities
         #region Constructor
         internal CssClassBuilder(Action cssClassMthod)
         {
-            this._cssClassMethod = cssClassMthod;
+            _cssClassMethod = cssClassMthod;
         }
         #endregion Constructor
 

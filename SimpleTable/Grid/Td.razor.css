@@ -1,0 +1,13 @@
+td {
+    text-align: center;
+    vertical-align: middle;
+    height:20px;
+    padding:0.1em;
+    box-sizing:inherit;
+}
+table.basic-border > tbody > tr > td {
+    border-bottom: 0.1em solid #b7b7b7;
+}
+.bordered > tbody > tr > td {
+    border: 0.05em solid #b7b7b7;
+}

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SimpleTable.Utilities;
 
-namespace SimpleTable.Grid
+namespace SimpleTable
 {
-    public partial class Header
+    public partial class THead
     {
         #region Fields
         private CssClassBuilder _classBuilder { get; set; }
@@ -25,7 +25,7 @@ namespace SimpleTable.Grid
         #endregion Properties
 
         #region Constructor
-        public Header()
+        public THead()
         {
             _classBuilder = new(AddCssClasses);
         }
@@ -34,10 +34,10 @@ namespace SimpleTable.Grid
         #region Methods
         public void AddCssClasses()
         {
-            CssDefault();
-            CssExternalClass();
-            CssHeaderBackground();
-            CssFixedHeader();
+            //CssDefault();
+            //CssExternalClass();
+            //CssHeaderBackground();
+            //CssFixedHeader();
         }
 
         private void CssDefault()

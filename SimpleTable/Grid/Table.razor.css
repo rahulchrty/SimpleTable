@@ -1,8 +1,18 @@
-.container {
-    contain: size style layout;
+table {
+    width: 100%;
+    max-width: 100%;
+    border-spacing: 0;
 }
-
+.bordered {
+    border: 0.05em solid #b7b7b7;
+}
 .scroll {
     height: 300px;
+    max-height: 300px;
     overflow: auto;
+    box-sizing: border-box;
+}
+
+.scroll > .bordered {
+    border-top: none;
 }

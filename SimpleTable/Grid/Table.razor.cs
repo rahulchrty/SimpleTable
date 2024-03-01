@@ -1,25 +1,26 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SimpleTable.Utilities;
 
-namespace SimpleTable.Grid
+namespace SimpleTable
 {
     public partial class Table
     {
         #region Fields
         private CssClassBuilder _classBuilder {  get; set; }
         private string _classes => _classBuilder.GetClassNames;
+        private string _cssClass { get;set; } = string.Empty;
         private bool _isBasicBorder { get; set; } = true;
         private bool _isBordered { get; set; }
         private bool _isBorderless { get; set; }
         private bool _isStriped { get; set; }
-        private bool _isScrollable { get; set; } 
+        private bool _isScrollable { get; set; }
         #endregion Fields
 
         #region Params
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
         [Parameter]
-        public string CssClass { get; set; } = string.Empty;
+        public string CssClass { get { return _cssClass; } set { _cssClass = value; } }
         [Parameter]
         public bool Bordered { get { return _isBordered; } set { _isBordered = value; } }
         [Parameter]
@@ -45,7 +46,7 @@ namespace SimpleTable.Grid
             CssBordered();
             CssBorderless();
             CssStriped();
-            CssScrollable();
+            //CssScrollable();
         }
 
         private void CssDefault()
@@ -55,27 +56,22 @@ namespace SimpleTable.Grid
                 _classBuilder.SetCssClass(Constants.BasicBorder, _isBasicBorder);
             }
         }
-
         private void CssExternalClass()
         {
-            if (!string.IsNullOrWhiteSpace(CssClass))
+            if (!string.IsNullOrWhiteSpace(_cssClass))
             {
-                _classBuilder.SetCssClass(CssClass.Trim(), true);
+                _classBuilder.SetCssClass(_cssClass.Trim(), true);
             }
         }
-
         private void CssBordered()
         {
             if (_isBordered)
             {
                 _isBasicBorder = false;
-                _isBorderless = false;
                 _classBuilder.SetCssClass(Constants.BasicBorder, _isBasicBorder);
-                _classBuilder.SetCssClass(Constants.Borderless, _isBorderless);
                 _classBuilder.SetCssClass(Constants.Bordered, _isBordered);
             }
         }
-
         private void CssBorderless()
         {
             if (_isBorderless)
@@ -83,8 +79,9 @@ namespace SimpleTable.Grid
                 if (!_isBordered)
                 {
                     _isBasicBorder = false;
+                    _isBordered = false;
                     _classBuilder.SetCssClass(Constants.BasicBorder, _isBasicBorder);
-                    _classBuilder.SetCssClass(Constants.Borderless, _isBorderless);
+                    _classBuilder.SetCssClass(Constants.Bordered, _isBordered);
                 }
             }
         }
