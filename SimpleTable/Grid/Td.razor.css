@@ -13,3 +13,14 @@ table.basic-border > tbody > tr > td {
 .bordered > tbody > tr > td {
     border: 0.8px solid #b7b7b7;
 }
+.fixed-cell {
+    position: sticky;
+    z-index: 1;
+    background-color: #ffffff;
+}
+.striped > tbody > tr:nth-child(1n) > td {
+    background-color: #f7f7f7;
+}
+.striped > tbody > tr:nth-child(2n) > td {
+    background-color: #ffffff;
+}

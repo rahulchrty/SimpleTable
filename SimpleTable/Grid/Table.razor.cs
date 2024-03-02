@@ -13,6 +13,7 @@ namespace SimpleTable
         private bool _isBorderless { get; set; }
         private bool _isStriped { get; set; }
         private string _scrollStyle { get; set; } = string.Empty;
+        private ISizing _Scrollable { get; set;}
         #endregion Fields
 
         #region Params
@@ -31,7 +32,7 @@ namespace SimpleTable
         [Parameter]
         public bool Striped { get => _isStriped; set => _isStriped = value; }
         [Parameter]
-        public ISizing? Scrollable { get; set; }
+        public ISizing Scrollable { get => _Scrollable; set => _Scrollable = value; }
         #endregion Params
 
         #region Constructor
@@ -100,15 +101,15 @@ namespace SimpleTable
         }
         private void SetScrollable()
         {
-            if (Scrollable is not null)
+            if (_Scrollable is not null)
             {
-                if (Scrollable.Measurement.Height is not null)
+                if (_Scrollable.Measurement.Height is not null)
                 {
-                    _scrollStyle = $"height:{Scrollable.Measurement.Height}{Scrollable.Measurement.Unit};";
+                    _scrollStyle = $"height:{_Scrollable.Measurement.Height}{_Scrollable.Measurement.Unit};";
                 }
-                if (Scrollable.Measurement.Width is not null)
+                if (_Scrollable.Measurement.Width is not null)
                 {
-                    _scrollStyle += $"width:{Scrollable.Measurement.Width}{Scrollable.Measurement.Unit};";
+                    _scrollStyle += $"width:{_Scrollable.Measurement.Width}{_Scrollable.Measurement.Unit};";
                 }
             }
         }

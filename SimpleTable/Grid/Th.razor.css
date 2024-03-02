@@ -1,27 +1,34 @@
 th {
     font-weight: inherit;
-    box-sizing:inherit;
+    box-sizing: inherit;
 }
+
 table.basic-border > thead > tr > th {
     border-bottom: 1.6px solid #b7b7b7;
 }
+
 table.bordered > thead > tr > th {
     border: 0.8px solid #b7b7b7;
 }
+
 table.basic-border > thead.hbg > tr > th {
     border-bottom: 1.6px solid #d4e4ff;
 }
+
 table.bordered > thead.hbg > tr > th {
     border: 0.8px solid #d4e4ff;
 }
+
 .scroll > table.bordered > thead > tr > th {
     border-top: 1.6px solid #b7b7b7;
     border-bottom: 1.6px solid #b7b7b7;
 }
+
 .scroll > table.bordered > thead.hbg > tr > th {
     border-top: 1.6px solid #d4e4ff;
     border-bottom: 1.6px solid #d4e4ff;
 }
+
 .scroll > table.basic-border > thead > tr > th,
 .scroll > table > thead > tr > th,
 .scroll > table.bordered > thead > tr > th,
@@ -33,8 +40,17 @@ table.bordered > thead.hbg > tr > th {
     background-color: #fff;
     z-index: 1;
 }
+
 .scroll > table.basic-border > thead.hbg > tr > th,
 .scroll > table > thead.hbg > tr > th,
 .scroll > table.bordered > thead.hbg > tr > th {
     background-color: #d4e4ff;
+}
+.scroll > table.basic-border > thead > tr > th.fixed-header,
+.scroll > table > thead > tr > th.fixed-header,
+.scroll > table.bordered > thead > tr > th.fixed-header,
+.scroll > table.basic-border > thead.hbg > tr > th.fixed-header,
+.scroll > table > thead.hbg > tr > th.fixed-header,
+.scroll > table.bordered > thead.hbg > tr > th.fixed-header {
+    z-index: 2;
 }

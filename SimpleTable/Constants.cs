@@ -13,6 +13,8 @@
 
         #region Header
         internal const string HeaderBackground = "hbg";
+        internal const string FixedHeader = "fixed-header";
+        internal const string FixedCell = "fixed-cell";
         #endregion
 
         #region Record

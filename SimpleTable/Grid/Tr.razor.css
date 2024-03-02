@@ -1,6 +1,0 @@
-.striped > tbody > tr:nth-child(1n) {
-    background-color: #f7f7f7;
-}
-.striped > tbody > tr:nth-child(2n) {
-    background-color: #ffffff;
-}

@@ -10,6 +10,8 @@ namespace SimpleTable
         private CssClassBuilder _styleBuilder { get; set; }
         private string _classes => _classBuilder.GetClassNames;
         private string _styles => _styleBuilder.GetCssStyles;
+        private ISizing _width {  get; set; }
+        private IAlignment _fixed { get; set; }
         #endregion Fields
 
         #region Properties
@@ -22,7 +24,9 @@ namespace SimpleTable
         [Parameter]
         public string Class { get; set; } = string.Empty;
         [Parameter]
-        public ISizing? Width { get; set; }
+        public ISizing Width { get => _width; set => _width = value; }
+        [Parameter]
+        public IAlignment Fixed { get => _fixed; set => _fixed = value; }
         #endregion Properties
 
         #region Constructor
@@ -37,17 +41,26 @@ namespace SimpleTable
         public void AddCssClasses()
         {
             CssExternalClass();
+            CssFixedCol();
         }
         public void AddCssStyle()
         {
             SetStyle();
             SetWidth();
+            SetFixPosition();
         }
         private void CssExternalClass()
         {
             if (!string.IsNullOrWhiteSpace(Class))
             {
                 _classBuilder.SetCssClass(Class.Trim(), true);
+            }
+        }
+        private void CssFixedCol()
+        {
+            if (_fixed is not null)
+            {
+                _classBuilder.SetCssClass(Constants.FixedHeader, true);
             }
         }
         private void SetStyle()
@@ -59,9 +72,16 @@ namespace SimpleTable
         }
         private void SetWidth()
         {
-            if (Width is not null)
+            if (_width is not null)
             {
                 _styleBuilder.SetCssStyle($"min-width: {Width.Measurement.Width}{Width.Measurement.Unit};");
+            }
+        }
+        private void SetFixPosition()
+        {
+            if (_fixed is not null)
+            {
+                _styleBuilder.SetCssStyle(Fixed.Style ?? string.Empty);
             }
         }
         #endregion Methods

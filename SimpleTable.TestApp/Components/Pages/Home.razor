@@ -30,14 +30,14 @@
 <Table Borderless Scrollable="@Size.Px.Height(400).Width(800)" Striped Class="test">
     <THead HeaderBG>
         <Tr>
-            <Th Width="Size.Px.Width(150)">Index</Th>
-            <Th Width="Size.Px.Width(150)">Header 2</Th>
-            <Th Width="Size.Px.Width(150)">Header 3</Th>
-            <Th Width="Size.Px.Width(150)">Header 4</Th>
-            <Th Width="Size.Px.Width(150)">Header 5</Th>
-            <Th Width="Size.Px.Width(150)">Header 6</Th>
-            <Th Width="Size.Px.Width(150)">Header 7</Th>
-            <Th Width="Size.Px.Width(150)">Header 8</Th>
+            <Th Fixed="Position.Left.Px(10)" Width="Size.Px.Width(150)" Style="www">Index</Th>
+            <Th Width="Size.Px.Width(300)">Header 2</Th>
+            <Th Fixed="Position.Left.Px(150)" Width="Size.Px.Width(300)">Header 3</Th>
+            <Th Width="Size.Px.Width(300)">Header 4</Th>
+            <Th Width="Size.Px.Width(300)">Header 5</Th>
+            <Th Width="Size.Px.Width(300)">Header 6</Th>
+            <Th Width="Size.Px.Width(300)">Header 7</Th>
+            <Th Width="Size.Px.Width(300)" Style="eee">Header 8</Th>
         </Tr>
     </THead>
     <TBody>
@@ -45,7 +45,7 @@
         {
             var index = i + 1;
             <Tr>
-                <Td>@index</Td>
+                <Td Fixed="Position.Left.Px(0)">@index</Td>
                 <Td>w</Td>
                 <Td>z</Td>
                 <Td>x</Td>
