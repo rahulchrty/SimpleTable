@@ -7,7 +7,7 @@
     3. Rename the components - done
     4. Scrollable size parameter for the table height - done
     5. Header text position - done
-    6. Clickable row (- propagated cell click) - next
+    6. Clickable row (- propagated cell click)
     7. Clickable cell - TBD
     8. Filters
     9. Local data source with pagination
@@ -22,19 +22,22 @@
     18. Common css file
     19. Fix scroll - done
     20. Convert em to px - done
-    21. Attributes - next
+    21. Attributes
     22. Pass style -done
+    23. Check box-sizing value for all the elements
 *@
 
-<Table Borderless Scrollable="400px" Striped>
+<Table Borderless Scrollable="@Size.Px.Height(400).Width(800)" Striped Class="test">
     <THead HeaderBG>
         <Tr>
-            <Th>Index</Th>
-            <Th>Header 2</Th>
-            <Th>Header 3</Th>
-            <Th>Header 4</Th>
-            <Th>Header 5</Th>
-            <Th>Header 6</Th>
+            <Th Width="Size.Px.Width(150)">Index</Th>
+            <Th Width="Size.Px.Width(150)">Header 2</Th>
+            <Th Width="Size.Px.Width(150)">Header 3</Th>
+            <Th Width="Size.Px.Width(150)">Header 4</Th>
+            <Th Width="Size.Px.Width(150)">Header 5</Th>
+            <Th Width="Size.Px.Width(150)">Header 6</Th>
+            <Th Width="Size.Px.Width(150)">Header 7</Th>
+            <Th Width="Size.Px.Width(150)">Header 8</Th>
         </Tr>
     </THead>
     <TBody>
@@ -48,7 +51,10 @@
                 <Td>x</Td>
                 <Td>a</Td>
                 <Td>v</Td>
+                <Td>y</Td>
+                <Td>d</Td>
             </Tr>
         }
     </TBody>
 </Table>
+

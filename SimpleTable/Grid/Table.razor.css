@@ -6,7 +6,10 @@ table {
 .bordered {
     border: 0.8px solid #b7b7b7;
 }
-
+.scroll {
+    overflow: auto;
+    box-sizing: border-box;
+}
 .scroll > table.bordered {
     border-top: none;
 }

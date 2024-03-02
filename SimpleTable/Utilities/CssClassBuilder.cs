@@ -5,9 +5,11 @@ namespace SimpleTable.Utilities
     internal class CssClassBuilder
     {
         #region Fields
-        private Action _cssClassMethod;
+        private Action _cssMethod;
         private StringBuilder _classBuilder = new();
+        private StringBuilder _styleBuilder = new();
         private Dictionary<string, bool> _classBuilderDictionary = new();
+        private List<string> _styles = new();
         #endregion Fields
 
         #region Properties
@@ -15,7 +17,7 @@ namespace SimpleTable.Utilities
         {
             get
             {
-                _cssClassMethod();
+                _cssMethod();
                 foreach (var eachBuilder in _classBuilderDictionary)
                 {
                     if (eachBuilder.Value)
@@ -26,12 +28,24 @@ namespace SimpleTable.Utilities
                 return _classBuilder.ToString().TrimEnd();
             }
         }
+        internal string GetCssStyles
+        {
+            get
+            {
+                _cssMethod();
+                foreach (string eachStyle in _styles)
+                {
+                    _ = _styleBuilder.Append(eachStyle).Append(Constants.CssDelemeter);
+                }
+                return _styleBuilder.ToString().TrimEnd();
+            }
+        }
         #endregion Properties
 
         #region Constructor
-        internal CssClassBuilder(Action cssClassMthod)
+        internal CssClassBuilder(Action cssMthod)
         {
-            _cssClassMethod = cssClassMthod;
+            _cssMethod = cssMthod;
         }
         #endregion Constructor
 
@@ -49,6 +63,10 @@ namespace SimpleTable.Utilities
                     _classBuilderDictionary[cssClassName] = isRequired;
                 }
             }
+        }
+        internal void SetCssStyle(string style)
+        {
+            _styles.Add(style);
         }
         #endregion Methods
     }
