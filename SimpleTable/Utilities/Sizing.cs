@@ -4,10 +4,10 @@ namespace SimpleTable
 {
     public static class Size
     {
-        public static ISizing Px { get; private set; } = new Sizing("px");
-        public static ISizing Em { get; private set; } = new Sizing("em");
-        public static ISizing Rem { get; private set; } = new Sizing("rem");
-        public static ISizing Ch { get; private set; } = new Sizing("ch");
+        public static ISizing Px { get => new Sizing("px"); }
+        public static ISizing Em { get => new Sizing("em"); }
+        public static ISizing Rem { get => new Sizing("rem"); }
+        public static ISizing Ch { get => new Sizing("ch"); }
     }
 
     public interface ISizing

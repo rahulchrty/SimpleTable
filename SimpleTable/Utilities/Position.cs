@@ -2,8 +2,8 @@
 {
     public static class Position
     {
-        public static IAlignment Left { get; private set; } = new Alignment("left");
-        public static IAlignment Right { get; private set; } = new Alignment("right");
+        public static IAlignment Left { get => new Alignment("left"); }
+        public static IAlignment Right { get => new Alignment("right"); }
     }
     public interface IAlignment
     {
