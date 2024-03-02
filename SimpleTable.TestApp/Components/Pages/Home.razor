@@ -8,12 +8,12 @@
     4. Scrollable size parameter for the table height - done
     5. Header text position - done
     6. Clickable row (- propagated cell click)
-    7. Clickable cell
+    7. Clickable cell - TBD
     8. Filters
     9. Local data source with pagination
     10. Remote data source with pagination
-    11. Srinkable columns
-    12. Fixed Columns
+    11. Srinkable columns - TBD
+    12. Fixed Columns - done
     13. Convert to html table - done
     14. Auto table
     15. Why inject as service
@@ -22,17 +22,25 @@
     18. Common css file
     19. Fix scroll - done
     20. Convert em to px - done
+    21. Attributes
+    22. Pass style -done
+    23. Check box-sizing value for all the elements
+    24. Header BG issue with bordered table
+    25. Fix col right scenario
+    26. Virtical border
 *@
 
-<Table Bordered Scrollable="400px">
-    <THead>
+<Table Borderless Striped Scrollable="Size.Px.Width(800).Height(400)">
+    <THead HeaderBG>
         <Tr>
-            <Th>Index</Th>
-            <Th>Header 2</Th>
-            <Th>Header 3</Th>
+            <Th Width="Size.Px.Width(150)" Fixed="Position.Left.Px(0)">Index</Th>
+            <Th Width="Size.Px.Width(200)">Header 2</Th>
+            <Th Fixed="Position.Left.Px(150)">Header 3</Th>
             <Th>Header 4</Th>
             <Th>Header 5</Th>
-            <Th>Header 6</Th>
+            <Th Width="Size.Px.Width(300)">Header 6</Th>
+            <Th>Header 7</Th>
+            <Th Width="Size.Px.Width(330)">Header 8</Th>
         </Tr>
     </THead>
     <TBody>
@@ -40,13 +48,16 @@
         {
             var index = i + 1;
             <Tr>
-                <Td>@index</Td>
+                <Td Fixed="Position.Left.Px(0)">@index</Td>
                 <Td>w</Td>
-                <Td>z</Td>
+                <Td Fixed="Position.Left.Px(150)">z</Td>
                 <Td>x</Td>
                 <Td>a</Td>
                 <Td>v</Td>
+                <Td>y</Td>
+                <Td>d</Td>
             </Tr>
         }
     </TBody>
 </Table>
+

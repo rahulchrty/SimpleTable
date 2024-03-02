@@ -14,7 +14,11 @@ namespace SimpleTable
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
         [Parameter]
-        public string CssClass { get; set; } = string.Empty;
+        public string Id { get; set; } = string.Empty;
+        [Parameter]
+        public string Style { get; set; } = string.Empty;
+        [Parameter]
+        public string Class { get; set; } = string.Empty;
         #endregion Properties
 
         #region Constructor
@@ -27,19 +31,13 @@ namespace SimpleTable
         #region Methods
         public void AddCssClasses()
         {
-            //CssDefault();
-            //CssExternalClass();
-        }
-
-        private void CssDefault()
-        {
-            _classBuilder.SetCssClass(Constants.Tr, true);
+            CssExternalClass();
         }
         private void CssExternalClass()
         {
-            if (!string.IsNullOrWhiteSpace(CssClass))
+            if (!string.IsNullOrWhiteSpace(Class))
             {
-                _classBuilder.SetCssClass(CssClass.Trim(), true);
+                _classBuilder.SetCssClass(Class.Trim(), true);
             }
         }
         #endregion Methods

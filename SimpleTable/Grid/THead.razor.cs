@@ -8,20 +8,19 @@ namespace SimpleTable
         #region Fields
         private CssClassBuilder _classBuilder { get; set; }
         private string _classes => _classBuilder.GetClassNames;
-        private string _cssClass {  get; set; } = string.Empty;
-        private bool _headerBackground { get; set; }
-        private bool _isFixed { get; set; }
         #endregion Fields
 
         #region Properties
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
         [Parameter]
-        public string CssClass { get { return _cssClass; } set { _cssClass = value; } }
+        public string Id { get; set; } = string.Empty;
         [Parameter]
-        public bool HeaderBackground { get { return _headerBackground; } set { _headerBackground = value; } }
+        public string Style { get; set; } = string.Empty;
         [Parameter]
-        public bool FixedHeader { get { return _isFixed; } set { _isFixed = value; } }
+        public string Class { get; set; } = string.Empty;
+        [Parameter]
+        public bool HeaderBG {  get; set; } = false;
         #endregion Properties
 
         #region Constructor
@@ -34,35 +33,21 @@ namespace SimpleTable
         #region Methods
         public void AddCssClasses()
         {
-            //CssDefault();
-            //CssExternalClass();
-            //CssHeaderBackground();
-            //CssFixedHeader();
-        }
-
-        private void CssDefault()
-        {
-            _classBuilder.SetCssClass(Constants.Tr, true);
+            CssExternalClass();
+            CssHeaderBackground();
         }
         private void CssExternalClass()
         {
-            if (!string.IsNullOrWhiteSpace(_cssClass))
+            if (!string.IsNullOrWhiteSpace(Class))
             {
-                _classBuilder.SetCssClass(_cssClass.Trim(), true);
+                _classBuilder.SetCssClass(Class.Trim(), true);
             }
         }
         private void CssHeaderBackground()
         {
-            if(_headerBackground)
+            if(HeaderBG)
             {
-                _classBuilder.SetCssClass(Constants.HeaderBackground, _headerBackground);
-            }
-        }
-        private void CssFixedHeader()
-        {
-            if (_isFixed)
-            {
-                _classBuilder.SetCssClass(Constants.Fixed, _isFixed);
+                _classBuilder.SetCssClass(Constants.HeaderBackground, HeaderBG);
             }
         }
         #endregion Methods
