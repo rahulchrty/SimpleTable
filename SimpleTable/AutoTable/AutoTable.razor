@@ -1,0 +1,30 @@
+@typeparam TSource
+
+<Table Bordered>
+    <THead>
+        <Tr>
+            @if (_colParamConfig.Any())
+            {
+                foreach (var eachCol in _colParamConfig)
+                {
+                    string colName = eachCol.Key;
+                    <Th>@colName</Th>
+                }
+            }
+        </Tr>
+    </THead>
+    <TBody>
+        @foreach (var eachItem in Sources)
+        {
+            <Tr>
+                @foreach (var eachCol in _colParamConfig)
+                {
+                    Type type = eachItem.GetType();
+                    var prop = type.GetProperty(eachCol.Value.ColumnName);
+                    var value = prop.GetValue(eachItem);
+                    <Td>@value</Td>
+                }
+            </Tr>
+        }
+    </TBody>
+</Table>

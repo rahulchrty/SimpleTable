@@ -10,8 +10,8 @@ namespace SimpleTable
         private CssClassBuilder _styleBuilder { get; set; }
         private string _classes => _classBuilder.GetClassNames;
         private string _styles => _styleBuilder.GetCssStyles;
-        private ISizing _width {  get; set; }
-        private IAlignment _fixed { get; set; }
+        private ISizing? _width {  get; set; }
+        private IAlignment? _fixed { get; set; }
         #endregion Fields
 
         #region Properties
@@ -24,9 +24,9 @@ namespace SimpleTable
         [Parameter]
         public string Class { get; set; } = string.Empty;
         [Parameter]
-        public ISizing Width { get => _width; set => _width = value; }
+        public ISizing? Width { get => _width; set => _width = value; }
         [Parameter]
-        public IAlignment Fixed { get => _fixed; set => _fixed = value; }
+        public IAlignment? Fixed { get => _fixed; set => _fixed = value; }
         #endregion Properties
 
         #region Constructor
@@ -74,14 +74,14 @@ namespace SimpleTable
         {
             if (_width is not null)
             {
-                _styleBuilder.SetCssStyle($"min-width: {Width.Measurement.Width}{Width.Measurement.Unit};");
+                _styleBuilder.SetCssStyle($"min-width: {_width.Measurement.Width}{_width.Measurement.Unit};");
             }
         }
         private void SetFixPosition()
         {
             if (_fixed is not null)
             {
-                _styleBuilder.SetCssStyle(Fixed.Style ?? string.Empty);
+                _styleBuilder.SetCssStyle(_fixed.Style ?? string.Empty);
             }
         }
         #endregion Methods

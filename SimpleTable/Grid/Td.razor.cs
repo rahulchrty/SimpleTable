@@ -10,7 +10,7 @@ namespace SimpleTable
         private CssClassBuilder _styleBuilder { get; set; }
         private string _classes => _classBuilder.GetClassNames;
         private string _styles => _styleBuilder.GetCssStyles;
-        private IAlignment _fixed { get; set; }
+        private IAlignment? _fixed { get; set; }
         #endregion Fields
 
         #region Properties
@@ -23,7 +23,7 @@ namespace SimpleTable
         [Parameter]
         public string Class { get; set; } = string.Empty;
         [Parameter]
-        public IAlignment Fixed { get => _fixed; set => _fixed = value; }
+        public IAlignment? Fixed { get => _fixed; set => _fixed = value; }
         #endregion Properties
 
         #region Constructor
