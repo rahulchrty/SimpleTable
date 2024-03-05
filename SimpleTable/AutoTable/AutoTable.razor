@@ -1,30 +1,37 @@
 @typeparam TSource
 
-<Table Bordered>
-    <THead>
-        <Tr>
-            @if (_colParamConfig.Any())
-            {
-                foreach (var eachCol in _colParamConfig)
-                {
-                    string colName = eachCol.Key;
-                    <Th>@colName</Th>
-                }
-            }
-        </Tr>
-    </THead>
-    <TBody>
-        @foreach (var eachItem in Sources)
+@_autoTableBuilder
+
+@code {
+    private RenderFragment _autoTableBuilder => __builder =>
+    {
+        var colParamConfig = _colConfig;
+        if (colParamConfig.Any())
         {
-            <Tr>
-                @foreach (var eachCol in _colParamConfig)
-                {
-                    Type type = eachItem.GetType();
-                    var prop = type.GetProperty(eachCol.Value.ColumnName);
-                    var value = prop.GetValue(eachItem);
-                    <Td>@value</Td>
-                }
-            </Tr>
+            <Table Bordered>
+                <THead>
+                    <Tr>
+                        @foreach (var eachCol in colParamConfig)
+                        {
+                            <Th>@eachCol.ColumnName</Th>
+                        }
+                    </Tr>
+                </THead>
+                <TBody>
+                    @foreach (var eachItem in Source)
+                    {
+                        <Tr>
+                            @foreach (var eachCol in colParamConfig)
+                            {
+                                Type type = eachItem.GetType();
+                                var prop = type.GetProperty(eachCol.PropertyName);
+                                var value = prop.GetValue(eachItem);
+                                <Td>@value</Td>
+                            }
+                        </Tr>
+                    }
+                </TBody>
+            </Table>
         }
-    </TBody>
-</Table>
+    };
+}

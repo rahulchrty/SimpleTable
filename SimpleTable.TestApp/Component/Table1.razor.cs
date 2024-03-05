@@ -7,17 +7,17 @@ namespace SimpleTable.TestApp.Component
         private List<DataModel> _data {  get; set; } = new ();
         public Table1()
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 3; i++)
             {
                 _data.Add(new DataModel
                 {
                     Id = i + 1,
                     Name = "Foo",
                     Description = "Bar",
-                    MFD = DateTime.Now,
-                    Expiry = DateTime.Now.AddYears(1),
+                    //MFD = DateTime.Now,
+                    //Expiry = DateTime.Now.AddYears(1),
                     Price = 12 + i,
-                    Currency = "Rupee"
+                    //Currency = "Rupee"
                 });
             }
         }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using SimpleTable.ExceptionHandling;
 using SimpleTable.Models;
 using System.Reflection;
 
@@ -7,31 +8,33 @@ namespace SimpleTable.AutoTable
     public partial class AutoTable<TSource>
     {
         #region Fields
-        private List<KeyValuePair<string, Column>> _colParamConfig => GetParamName();
+        private List<ColumnConfig> _colConfig => GetColumnConfig();
         #endregion Fields
 
         #region Parameters
         [Parameter]
-        public IEnumerable<TSource>? Sources { get; set; }
+        public IEnumerable<TSource>? Source { get; set; }
         #endregion Parameters
         public AutoTable()
         {
 
         }
 
-        private List<KeyValuePair<string, Column>> GetParamName()
+        private List<ColumnConfig> GetColumnConfig()
         {
             try
             {
-                List<KeyValuePair<string, Column>> colParamConfig = [];
+                List<ColumnConfig> colConfig = [];
                 string colName = string.Empty;
-                if (Sources is not null && Sources.Any())
+                int colOrder = 0;
+                int colOrderIncrimental = 0;
+                if (Source is not null && Source.Any())
                 {
                     Type type = typeof(TSource);
-                    List<PropertyInfo> properties = [.. type.GetProperties()];
+                    List<PropertyInfo> properties = type.GetProperties().ToList();
                     foreach (var eachProp in properties)
                     {
-                        ColumnConfig columnAttr = (ColumnConfig)Attribute.GetCustomAttribute(eachProp, typeof(ColumnConfig));
+                        DataColumn columnAttr = (DataColumn)Attribute.GetCustomAttribute(eachProp, typeof(DataColumn));
                         if (string.IsNullOrWhiteSpace(columnAttr?.Name))
                         {
                             colName = eachProp.Name;
@@ -40,12 +43,52 @@ namespace SimpleTable.AutoTable
                         {
                             colName = columnAttr.Name;
                         }
-                        colParamConfig.Add(new KeyValuePair<string, Column>(colName, new Column { ColumnName = eachProp.Name, Order = columnAttr.Order }));
+                        if (!colConfig.Where(x => x.Order == columnAttr.Order).Any())
+                        {
+                            if (columnAttr is not null)
+                            {
+                                colOrder = columnAttr.Order;
+                            }
+                            colConfig.Add(new() { ColumnName = colName, PropertyName = eachProp.Name, Order = colOrder });
+                        }
+                        else
+                        {
+                            throw new InvalidColumnOrderException(columnAttr.Order);
+                        }
                     }
                 }
-                return colParamConfig.OrderBy(x => x.Value.Order).ToList();
+                return colConfig.OrderBy(x => x.Order).ToList();
             }
-            catch (Exception ex)
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        private List<ColumnConfig> GetColumnAttributeDetails()
+        {
+            try
+            {
+                List<ColumnConfig> colConfig = [];
+                if (Source is not null && Source.Any())
+                {
+                    Type type = typeof(TSource);
+                    List<PropertyInfo> properties = [.. type.GetProperties()];
+                    foreach (var eachProp in properties)
+                    {
+                        DataColumn columnAttr = (DataColumn)Attribute.GetCustomAttribute(eachProp, typeof(DataColumn));
+                        if (columnAttr is not null)
+                        {
+                            colConfig.Add(new() { ColumnName = columnAttr.Name, PropertyName = eachProp.Name, Order = columnAttr.Order });
+                        }
+                    }
+                }
+                else
+                {
+                    throw new InvalidSourceException();
+                }
+                return colConfig;
+            }
+            catch (Exception)
             {
                 throw;
             }
