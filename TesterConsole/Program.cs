@@ -136,14 +136,16 @@ void HasDuplicateColumn_Test2()
 #region List<Column> OrderColumns(List<string> properties, List<Column> colDetails)
 void OrderColumns_Test1()
 {
-    Dictionary<int, string> props = new();//["Id", "Sufix", "FirstName", "LastName", "DateOfBirth", "Phone", "Address"];
-    props.Add(1, "Id");
-    props.Add(2, "Sufix");
-    props.Add(3, "FirstName");
-    props.Add(4, "LastName");
-    props.Add(5, "DateOfBirth");
-    props.Add(6, "Phone");
-    props.Add(7, "Address");
+    Dictionary<int, string> props = new()
+    {
+        { 1, "Id" },
+        { 2, "Sufix" },
+        { 3, "FirstName" },
+        { 4, "LastName" },
+        { 5, "DateOfBirth" },
+        { 6, "Phone" },
+        { 7, "Address" }
+    };
 
     List<Column> colDetails =
     [
@@ -177,5 +179,44 @@ void OrderColumns_Test1()
     var cols = cc.OrderColumns(props, colDetails);
     Console.WriteLine();
 }
-OrderColumns_Test1();
+//OrderColumns_Test1();
 #endregion List<Column> OrderColumns(List<string> properties, List<Column> colDetails)
+
+#region List<Column> GetColumn(TSource source)
+void GetColumn_Test1()
+{
+    ColumnSetting<SourceData1> colSetting = new();
+    var cols = colSetting.GetColumns(new SourceData1());
+    Console.WriteLine();
+}
+//GetColumn_Test1();
+void GetColumn_Test2()
+{
+    ColumnSetting<SourceData2> colSetting = new();
+    var cols = colSetting.GetColumns(new SourceData2());
+    Console.WriteLine();
+}
+//GetColumn_Test2();
+void GetColumn_Test3()
+{
+    ColumnSetting<SourceData3> colSetting = new();
+    var cols = colSetting.GetColumns(new SourceData3());
+    Console.WriteLine();
+}
+//GetColumn_Test3();
+void GetColumn_Test5()
+{
+    ColumnSetting<SourceData5> colSetting = new();
+    var cols = colSetting.GetColumns(new SourceData5());
+    Console.WriteLine();
+}
+//GetColumn_Test5();
+
+void GetColumn_Test6()
+{
+    ColumnSetting<SourceData6> colSetting = new();
+    var cols = colSetting.GetColumns(new SourceData6());
+    Console.WriteLine();
+}
+//GetColumn_Test6();
+#endregion List<Column> GetColumn(TSource source)

@@ -1,24 +1,25 @@
 ﻿using SimpleTable.ExceptionHandling;
 using SimpleTable.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SimpleTable.TableConfig
 {
-    public class ColumnSetting<TSource>
+    internal class ColumnSetting<TSource>
     {
-        public List<Column> GetColumn(TSource source)
+        /// <summary>
+        /// Get columns with their order
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidColumnOrderException"></exception>
+        internal List<Column> GetColumns(TSource source)
         {
-            List<Column> columns = new();
+            List<Column> columns;
             Dictionary<int, string> properties = GetPropertiesByPropertyOrder(source);
             List<Column> colDetails = GetColumnAttributeDetailsByPropertyName(properties.Values.ToList());
-            if(!HasDuplicateColumn(colDetails))
+            if (!HasDuplicateColumn(colDetails))
             {
-
+                columns = OrderColumns(properties, colDetails);
             }
             else
             {
@@ -34,7 +35,7 @@ namespace SimpleTable.TableConfig
         /// <param name="source"></param>
         /// <returns></returns>
         /// <exception cref="InvalidSourceException"></exception>
-        public Dictionary<int, string> GetPropertiesByPropertyOrder(TSource source)
+        private Dictionary<int, string> GetPropertiesByPropertyOrder(TSource source)
         {
             Dictionary<int, string> properties = new();
             int propertyOrder = 0;
@@ -63,7 +64,7 @@ namespace SimpleTable.TableConfig
         /// </summary>
         /// <param name="properties"></param>
         /// <returns></returns>
-        public List<Column> GetColumnAttributeDetailsByPropertyName(List<string> properties)
+        private List<Column> GetColumnAttributeDetailsByPropertyName(List<string> properties)
         {
             List<Column> colConfig = [];
             if (properties is not null)
@@ -93,28 +94,41 @@ namespace SimpleTable.TableConfig
         /// </summary>
         /// <param name="colDetails"></param>
         /// <returns></returns>
-        public bool HasDuplicateColumn(List<Column> colDetails)
+        private bool HasDuplicateColumn(List<Column> colDetails)
         {
             bool hasDuplicate = false;
-            hasDuplicate = colDetails.GroupBy(x => x.Order).Where(g => g.Count() > 1).Any();
+            hasDuplicate = colDetails.Where(x => x.Order != 0).GroupBy(x => x.Order).Where(g => g.Count() > 1).Any();
             return hasDuplicate;
         }
 
-        public List<Column> OrderColumns(Dictionary<int, string> properties, List<Column> colDetails)
+        /// <summary>
+        /// Order cols: Cols with an order will be arranged first order by assending order.
+        /// Later the cols with no order will be added according to the property order.
+        /// Cols start order number does not matter, in case if we have an order such that
+        /// prop:order => prop1:22, prop2:34, prop9:23, prop6:16, prop11:55
+        /// It will be ordered as prop6:1, prop1:2, prop9:3, prop2:4, prop11:5
+        /// and followed by rest of the cols according to their propperty order in the type.
+        /// </summary>
+        /// <param name="properties"></param>
+        /// <param name="colDetails"></param>
+        /// <returns></returns>
+        private List<Column> OrderColumns(Dictionary<int, string> properties, List<Column> colDetails)
         {
             List<Column> columns = new();
             int colOrder = 0;
-            columns = colDetails.Where(x => x.Order != 0).OrderBy(x=>x.Order).ToList();
+            columns = colDetails.Where(x => x.Order != 0).OrderBy(x => x.Order).ToList();
             foreach (var eachCol in columns) { eachCol.Order = ++colOrder; }
-            var colsWithoutOrder = properties.Where(x => colDetails.Where(x => x.Order == 0).Where(y=>y.PropertyName.Equals(x.Value)).Any()).ToList();
+            var colsWithoutOrder = properties.Where(x => colDetails.Where(x => x.Order == 0).Where(y => y.PropertyName.Equals(x.Value)).Any()).ToList();
             var propsWithNoColAttr = properties.Where(x => !colDetails.Any(y => y.PropertyName.Equals(x.Value))).ToList();
             propsWithNoColAttr.AddRange(colsWithoutOrder);
-            foreach (var eachProp in propsWithNoColAttr.OrderBy(x=>x.Key)) 
+            foreach (var eachProp in propsWithNoColAttr.OrderBy(x => x.Key))
             {
                 columns.Add(new Column
                 {
-                    ColumnName = eachProp.Value,
                     PropertyName = eachProp.Value,
+                    ColumnName = colDetails.Where(x => x.PropertyName.Equals(eachProp.Value)).Any() 
+                                    ? colDetails.Where(x => x.PropertyName.Equals(eachProp.Value)).Select(x => x.ColumnName).First()
+                                    : eachProp.Value,
                     Order = ++colOrder
                 });
             }
