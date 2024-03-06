@@ -1,5 +1,15 @@
 @typeparam TSource
 
+@*
+    1. No col config, take property name as col name
+    2. All had col config and name then take that as the name
+    3. Some col does not have order then render those at the end my property order
+    4. Set property from component tag [prop name: col name, order id]
+    p1 - tag order
+    p2 - attr order
+    p3 - prop order
+*@
+
 @_autoTableBuilder
 
 @code {

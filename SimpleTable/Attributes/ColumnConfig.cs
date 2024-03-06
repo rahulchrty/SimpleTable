@@ -1,7 +1,7 @@
 ﻿namespace SimpleTable
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class DataColumn : Attribute
+    public class ColumnConfig : Attribute
     {
         /// <summary>
         /// Set the table column name.

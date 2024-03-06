@@ -3,12 +3,12 @@
     internal class InvalidSourceException : Exception
     {
         internal InvalidSourceException()
-        : base($"Provided source has no column")
+        : base($"Provided source is invalid")
         {
         }
 
         internal InvalidSourceException(Exception inner)
-        : base($"Provided source has no column", inner)
+        : base($"Provided source is invalid", inner)
         {
         }
     }

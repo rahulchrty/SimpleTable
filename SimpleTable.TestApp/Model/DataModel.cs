@@ -19,16 +19,16 @@
         //[DataColumn(Order = 5)]
         //public string MD { get; set; } = string.Empty;
 
-        //[DataColumn(Order = 1)]
+        [ColumnConfig(Order = 1)]
         public int Id { get; set; }
 
-        //[DataColumn(Name = "Product Name", Order = 2)]
+        [ColumnConfig(Name = "Product Name", Order = 2)]
         public string Name { get; set; } = string.Empty;
 
-        //[DataColumn(Order = 3)]
+        [ColumnConfig(Name= "Product Description")]
         public string Description { get; set; } = string.Empty;
 
-        //[DataColumn(Order = 3)]
+        [ColumnConfig(Name = "Price")]
         public double Price { get; set; }
     }
 }
