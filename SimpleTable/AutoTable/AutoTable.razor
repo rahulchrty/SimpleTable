@@ -1,0 +1,47 @@
+@typeparam TSource
+
+@*
+    1. No col config, take property name as col name
+    2. All had col config and name then take that as the name
+    3. Some col does not have order then render those at the end my property order
+    4. Set property from component tag [prop name: col name, order id]
+    p1 - tag order
+    p2 - attr order
+    p3 - prop order
+*@
+
+@_autoTableBuilder
+
+@code {
+    private RenderFragment _autoTableBuilder => __builder =>
+    {
+        var colParamConfig = _colConfig;
+        if (colParamConfig.Any())
+        {
+            <Table Bordered>
+                <THead>
+                    <Tr>
+                        @foreach (var eachCol in colParamConfig)
+                        {
+                            <Th>@eachCol.ColumnName</Th>
+                        }
+                    </Tr>
+                </THead>
+                <TBody>
+                    @foreach (var eachItem in Source)
+                    {
+                        <Tr>
+                            @foreach (var eachCol in colParamConfig)
+                            {
+                                Type type = eachItem.GetType();
+                                var prop = type.GetProperty(eachCol.PropertyName);
+                                var value = prop.GetValue(eachItem);
+                                <Td>@value</Td>
+                            }
+                        </Tr>
+                    }
+                </TBody>
+            </Table>
+        }
+    };
+}

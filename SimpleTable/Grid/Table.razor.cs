@@ -13,7 +13,7 @@ namespace SimpleTable
         private bool _isBorderless { get; set; }
         private bool _isStriped { get; set; }
         private string _scrollStyle { get; set; } = string.Empty;
-        private ISizing _Scrollable { get; set;}
+        private ISizing? _Scrollable { get; set;}
         #endregion Fields
 
         #region Params
@@ -32,7 +32,7 @@ namespace SimpleTable
         [Parameter]
         public bool Striped { get => _isStriped; set => _isStriped = value; }
         [Parameter]
-        public ISizing Scrollable { get => _Scrollable; set => _Scrollable = value; }
+        public ISizing? Scrollable { get => _Scrollable; set => _Scrollable = value; }
         #endregion Params
 
         #region Constructor
