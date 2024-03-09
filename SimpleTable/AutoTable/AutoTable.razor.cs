@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
-using SimpleTable.ExceptionHandling;
 using SimpleTable.Models;
 using SimpleTable.TableConfig;
-using System.Reflection;
 
 namespace SimpleTable.AutoTable
 {
@@ -18,17 +16,24 @@ namespace SimpleTable.AutoTable
         #endregion Parameters
         public AutoTable()
         {
-
+             
         }
 
         private List<Column> GetColumnConfig()
         {
             try
             {
-                List<Column> colConfig = [];
-                ColumnSetting columnSetting = new();
-                colConfig = columnSetting.GetColumns(typeof(TSource));
-                return colConfig;
+                if (Source is not null)
+                {
+                    List<Column> colConfig = [];
+                    ColumnSetting columnSetting = new();
+                    colConfig = columnSetting.GetColumns(typeof(TSource));
+                    return colConfig;
+                }
+                else
+                {
+                    throw new NullReferenceException();
+                }
             }
             catch (Exception)
             {
