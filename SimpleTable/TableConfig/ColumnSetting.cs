@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace SimpleTable.TableConfig
 {
-    internal class ColumnSetting<TSource>
+    internal class ColumnSetting
     {
         /// <summary>
         /// Get columns with their order
@@ -12,11 +12,11 @@ namespace SimpleTable.TableConfig
         /// <param name="source"></param>
         /// <returns></returns>
         /// <exception cref="InvalidColumnOrderException"></exception>
-        internal List<Column> GetColumns(TSource source)
+        internal List<Column> GetColumns(Type type)
         {
             List<Column> columns;
-            Dictionary<int, string> properties = GetPropertiesByPropertyOrder(source);
-            List<Column> colDetails = GetColumnAttributeDetailsByPropertyName(properties.Values.ToList());
+            Dictionary<int, string> properties = GetPropertiesByPropertyOrder(type);
+            List<Column> colDetails = GetColumnAttributeDetailsByPropertyName(properties.Values.ToList(), type);
             if (!HasDuplicateColumn(colDetails))
             {
                 columns = OrderColumns(properties, colDetails);
@@ -35,25 +35,21 @@ namespace SimpleTable.TableConfig
         /// <param name="source"></param>
         /// <returns></returns>
         /// <exception cref="InvalidSourceException"></exception>
-        private Dictionary<int, string> GetPropertiesByPropertyOrder(TSource source)
+        private Dictionary<int, string> GetPropertiesByPropertyOrder(Type type)
         {
             Dictionary<int, string> properties = new();
             int propertyOrder = 0;
-            if (source is not null)
+            List<PropertyInfo> propertiesInfo = [.. type.GetProperties()];
+            if (propertiesInfo.Any())
             {
-                Type type = typeof(TSource);
-                List<PropertyInfo> propertiesInfo = [.. type.GetProperties()];
-                if (propertiesInfo.Any())
+                foreach (var eachProp in propertiesInfo)
                 {
-                    foreach (var eachProp in propertiesInfo)
-                    {
-                        properties.Add(++propertyOrder, eachProp.Name);
-                    }
+                    properties.Add(++propertyOrder, eachProp.Name);
                 }
-                else
-                {
-                    throw new InvalidSourceException();
-                }
+            }
+            else
+            {
+                throw new InvalidSourceException();
             }
             return properties;
         }
@@ -64,12 +60,11 @@ namespace SimpleTable.TableConfig
         /// </summary>
         /// <param name="properties"></param>
         /// <returns></returns>
-        private List<Column> GetColumnAttributeDetailsByPropertyName(List<string> properties)
+        private List<Column> GetColumnAttributeDetailsByPropertyName(List<string> properties, Type type)
         {
             List<Column> colConfig = [];
             if (properties is not null)
             {
-                Type type = typeof(TSource);
                 foreach (var eachProp in properties)
                 {
                     ColumnConfig columnAttr = (ColumnConfig)Attribute.GetCustomAttribute(type.GetProperty(eachProp), typeof(ColumnConfig));
@@ -126,7 +121,7 @@ namespace SimpleTable.TableConfig
                 columns.Add(new Column
                 {
                     PropertyName = eachProp.Value,
-                    ColumnName = colDetails.Where(x => x.PropertyName.Equals(eachProp.Value)).Any() 
+                    ColumnName = colDetails.Where(x => x.PropertyName.Equals(eachProp.Value)).Any()
                                     ? colDetails.Where(x => x.PropertyName.Equals(eachProp.Value)).Select(x => x.ColumnName).First()
                                     : eachProp.Value,
                     Order = ++colOrder

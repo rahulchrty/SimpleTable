@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SimpleTable.ExceptionHandling;
 using SimpleTable.Models;
+using SimpleTable.TableConfig;
 using System.Reflection;
 
 namespace SimpleTable.AutoTable
@@ -25,7 +26,8 @@ namespace SimpleTable.AutoTable
             try
             {
                 List<Column> colConfig = [];
-                //List<Column> colAttrConfig  = GetColumnAttributeDetails();
+                ColumnSetting columnSetting = new();
+                colConfig = columnSetting.GetColumns(typeof(TSource));
                 return colConfig;
             }
             catch (Exception)
