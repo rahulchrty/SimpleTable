@@ -11,7 +11,7 @@ namespace SimpleTable.TableConfig
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        /// <exception cref="InvalidColumnrException"></exception>
+        /// <exception cref="InvalidColumnException"></exception>
         internal List<Column> GetColumns(Type type, List<Column> priorityColConfig)
         {
             List<Column> columns;
@@ -27,7 +27,7 @@ namespace SimpleTable.TableConfig
             }
             else
             {
-                throw new InvalidColumnrException($"Column order ambiguity.");
+                throw new InvalidColumnException($"Column order ambiguity.");
             }
             return columns;
         }
@@ -143,7 +143,7 @@ namespace SimpleTable.TableConfig
         /// <param name="colConfig"></param>
         /// <param name="priorityColConfig"></param>
         /// <returns></returns>
-        /// <exception cref="InvalidColumnrException"></exception>
+        /// <exception cref="InvalidColumnException"></exception>
         private List<Column> SetupPriorityColConfig(List<Column> colConfig, List<Column> priorityColConfig)
         {
             List<Column> colConfigWithPriority = colConfig;
@@ -159,13 +159,12 @@ namespace SimpleTable.TableConfig
                     }
                     if (HasDuplicateColumn(colConfigWithPriority))
                     {
-                        throw new InvalidColumnrException($"Column order ambiguity.");
+                        throw new InvalidColumnException($"Column order ambiguity.");
                     }
-
                 }
                 else
                 {
-                    throw new InvalidColumnrException("Invalid column property name.");
+                    throw new InvalidColumnException("Invalid column property name.");
                 }
             }
             return colConfigWithPriority;
