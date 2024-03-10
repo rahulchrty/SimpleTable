@@ -6,7 +6,7 @@
         public int Id { get; set; }
 
         [ColumnConfig(Name = "First Name", Order = 2)]
-        public string FiestName { get; set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
 
         [ColumnConfig(Name = "Middle Name", Order = 3)]
         public string MiddleName { get; set; } = string.Empty;

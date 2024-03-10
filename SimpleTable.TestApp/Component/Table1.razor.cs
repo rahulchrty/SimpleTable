@@ -5,7 +5,7 @@ namespace SimpleTable.TestApp.Component
 {
     public partial class Table1
     {
-        private List<DataModel> _data {  get; set; } = new ();
+        private List<DataModel> _data { get; set; } = new();
         private List<Column> _localization;
         public Table1()
         {
@@ -17,7 +17,8 @@ namespace SimpleTable.TestApp.Component
         {
             List<Column> localization = new()
             {
-                { new Column{ PropertyName = "Phone", ColumnName="Mobile"} }
+                { new Column{ PropertyName = "LastName", Order=2} },
+                { new Column{ PropertyName = "Phone", ColumnName="Mobile", Order=6} }
             };
             return localization;
         }
@@ -29,7 +30,7 @@ namespace SimpleTable.TestApp.Component
                 _data.Add(new DataModel
                 {
                     Id = i + 1,
-                    FiestName = $"Foo{i}",
+                    FirstName = $"Foo{i}",
                     MiddleName = string.Empty,
                     LastName = $"Bar{i}",
                     CurrentAddress = "Current Address",
