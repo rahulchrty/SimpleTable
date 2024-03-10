@@ -7,12 +7,12 @@ namespace SimpleTable.TableConfig
     internal class ColumnSetting
     {
         /// <summary>
-        /// Get columns with their order
+        /// Get columns with their orders
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        /// <exception cref="InvalidColumnOrderException"></exception>
-        internal List<Column> GetColumns(Type type)
+        /// <exception cref="InvalidColumnrException"></exception>
+        internal List<Column> GetColumns(Type type, List<Column> priorityColConfig)
         {
             List<Column> columns;
             Dictionary<int, string> properties = GetPropertiesByPropertyOrder(type);
@@ -20,10 +20,14 @@ namespace SimpleTable.TableConfig
             if (!HasDuplicateColumn(colDetails))
             {
                 columns = OrderColumns(properties, colDetails);
+                if (priorityColConfig is not null && priorityColConfig.Count > 0)
+                {
+                    columns = SetupPriorityColConfig(columns, priorityColConfig);
+                }
             }
             else
             {
-                throw new InvalidColumnOrderException();
+                throw new InvalidColumnrException($"Column order ambiguity.");
             }
             return columns;
         }
@@ -128,6 +132,43 @@ namespace SimpleTable.TableConfig
                 });
             }
             return columns;
+        }
+
+        /// <summary>
+        /// Add the priority columns, this function can be useful for localization.
+        /// Developer can override the fix column order and name with dynamically
+        /// passed values. This will override all other configuration. However
+        /// column order should always be unique.
+        /// </summary>
+        /// <param name="colConfig"></param>
+        /// <param name="priorityColConfig"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidColumnrException"></exception>
+        private List<Column> SetupPriorityColConfig(List<Column> colConfig, List<Column> priorityColConfig)
+        {
+            List<Column> colConfigWithPriority = colConfig;
+            foreach (var eachPriorityCol in priorityColConfig)
+            {
+                var col = colConfigWithPriority.Where(x => x.PropertyName.Equals(eachPriorityCol.PropertyName)).FirstOrDefault();
+                if (col is not null)
+                {
+                    colConfigWithPriority[colConfigWithPriority.IndexOf(col)].ColumnName = eachPriorityCol.ColumnName;
+                    if (eachPriorityCol.Order > 0)
+                    {
+                        colConfigWithPriority[colConfigWithPriority.IndexOf(col)].Order = eachPriorityCol.Order;
+                    }
+                    if (HasDuplicateColumn(colConfigWithPriority))
+                    {
+                        throw new InvalidColumnrException($"Column order ambiguity.");
+                    }
+
+                }
+                else
+                {
+                    throw new InvalidColumnrException("Invalid column property name.");
+                }
+            }
+            return colConfigWithPriority;
         }
     }
 }
