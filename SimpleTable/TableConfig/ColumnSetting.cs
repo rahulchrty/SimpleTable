@@ -7,12 +7,12 @@ namespace SimpleTable.TableConfig
     internal class ColumnSetting
     {
         /// <summary>
-        /// Get columns with their order
+        /// Get columns with their orders
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        /// <exception cref="InvalidColumnOrderException"></exception>
-        internal List<Column> GetColumns(Type type)
+        /// <exception cref="InvalidColumnException"></exception>
+        internal List<Column> GetColumns(Type type, List<Column> priorityColConfig)
         {
             List<Column> columns;
             Dictionary<int, string> properties = GetPropertiesByPropertyOrder(type);
@@ -20,10 +20,14 @@ namespace SimpleTable.TableConfig
             if (!HasDuplicateColumn(colDetails))
             {
                 columns = OrderColumns(properties, colDetails);
+                if (priorityColConfig is not null && priorityColConfig.Count > 0)
+                {
+                    columns = SetupPriorityColConfig(columns, priorityColConfig);
+                }
             }
             else
             {
-                throw new InvalidColumnOrderException();
+                throw new InvalidColumnException($"Column order ambiguity.");
             }
             return columns;
         }
@@ -128,6 +132,75 @@ namespace SimpleTable.TableConfig
                 });
             }
             return columns;
+        }
+
+        /// <summary>
+        /// Add the priority columns, this function can be useful for localization.
+        /// Developer can override the fix column order and name with dynamically
+        /// passed values. This will override all other configuration. However
+        /// column order should always be unique.
+        /// </summary>
+        /// <param name="colConfig"></param>
+        /// <param name="priorityColConfig"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidColumnException"></exception>
+        private List<Column> SetupPriorityColConfig(List<Column> colConfig, List<Column> priorityColConfig)
+        {
+            List<Column> colConfigWithPriority = colConfig;
+            foreach (var eachPriorityCol in priorityColConfig)
+            {
+                var col = colConfigWithPriority.Where(x => x.PropertyName.Equals(eachPriorityCol.PropertyName)).FirstOrDefault();
+                if (col is not null)
+                {
+                    if (!string.IsNullOrWhiteSpace(eachPriorityCol.ColumnName))
+                    {
+                        colConfigWithPriority[colConfigWithPriority.IndexOf(col)].ColumnName = eachPriorityCol.ColumnName;
+                    }
+                    if (eachPriorityCol.Order > 0)
+                    {
+                        colConfigWithPriority[colConfigWithPriority.IndexOf(col)].Order = eachPriorityCol.Order;
+                    }
+                }
+                else
+                {
+                    throw new InvalidColumnException("Invalid column property name.");
+                }
+            }
+            if (HasDuplicateColumn(colConfigWithPriority))
+            {
+                colConfigWithPriority = PriorityColumnOrderProcessor(colConfigWithPriority, priorityColConfig);
+            }
+            return colConfigWithPriority;
+        }
+
+        /// <summary>
+        /// Reorder the cols according to the orders provided in the priority config
+        /// </summary>
+        /// <param name="colConfigWithPriority"></param>
+        /// <param name="colConfigs"></param>
+        /// <returns></returns>
+        private List<Column> PriorityColumnOrderProcessor(List<Column> colConfigWithPriority, List<Column> colConfigs)
+        {
+            List<Column> cols = colConfigWithPriority;
+            List<Column> configs = colConfigs.Where(x => x.Order > 0).ToList();
+            foreach (var eachConf in configs)
+            {
+                var colsToShift = cols.Where(x => !x.PropertyName.Equals(eachConf.PropertyName)).Where(y => y.Order >= eachConf.Order).OrderBy(x => x.Order).ToList();
+                bool isColToShft = true;
+                for (int i = 0; i < colsToShift.Count && isColToShft; i++)
+                {
+                    if (isColToShft)
+                    {
+                        colsToShift[i].Order += 1;
+                        if (colsToShift.IndexOf(colsToShift[i]) + 1 == colsToShift.Count
+                            || colsToShift[i].Order < colsToShift[colsToShift.IndexOf(colsToShift[i]) + 1].Order)
+                        {
+                            isColToShft = false;
+                        }
+                    }
+                }
+            }
+            return cols.OrderBy(x => x.Order).ToList();
         }
     }
 }

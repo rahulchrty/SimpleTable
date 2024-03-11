@@ -2,33 +2,28 @@
 {
     public class DataModel
     {
-        //[DataColumn(Order = 1)]
-        //public int Id { get; set; }
-        //[DataColumn(Name ="Product Name", Order = 2)]
-        //public string Name { get; set; } = string.Empty;
-        //[DataColumn(Order = 3)]
-        //public string Description { get; set; } = string.Empty;
-        //[DataColumn(Order = 4)]
-        //public double Price { get; set; }
-        //[DataColumn(Name= "Manufacturing Date", Order = 6)]
-        //public DateTime MFD { get; set; }
-        //[DataColumn(Name = "Expiry Date", Order = 7)]
-        //public DateTime Expiry { get; set; }
-        //[DataColumn(Order = 5)]
-        //public string Currency { get; set; } = string.Empty;
-        //[DataColumn(Order = 5)]
-        //public string MD { get; set; } = string.Empty;
-
         [ColumnConfig(Order = 1)]
         public int Id { get; set; }
 
-        [ColumnConfig(Name = "Product Name", Order = 2)]
-        public string Name { get; set; } = string.Empty;
+        [ColumnConfig(Name = "First Name", Order = 2)]
+        public string FirstName { get; set; } = string.Empty;
 
-        [ColumnConfig(Name= "Product Description")]
-        public string Description { get; set; } = string.Empty;
+        [ColumnConfig(Name = "Middle Name", Order = 3)]
+        public string MiddleName { get; set; } = string.Empty;
 
-        [ColumnConfig(Name = "Price")]
-        public double Price { get; set; }
+        [ColumnConfig(Name = "Last Name", Order = 4)]
+        public string LastName { get; set; } = string.Empty;
+
+        [ColumnConfig(Name="Date of birth", Order = 5)]
+        public string Dob { get; set; } = string.Empty;
+
+        [ColumnConfig(Name="Current Address", Order = 6)]
+        public string CurrentAddress { get; set; }
+
+        [ColumnConfig(Name = "Permanent Address", Order = 7)]
+        public string PermanentAddress { get; set; }
+
+        [ColumnConfig(Name = "Phone Number", Order = 8)]
+        public string Phone { get; set; }
     }
 }

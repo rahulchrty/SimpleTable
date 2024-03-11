@@ -1,24 +1,25 @@
 ﻿using Microsoft.AspNetCore.Components;
-using SimpleTable.ExceptionHandling;
 using SimpleTable.Models;
 using SimpleTable.TableConfig;
-using System.Reflection;
 
 namespace SimpleTable.AutoTable
 {
-    public partial class AutoTable<TSource>
+    public partial class AutoTable<TSource> where TSource : class
     {
         #region Fields
         private List<Column> _colConfig => GetColumnConfig();
+        private ColumnSetting _columnSetting;
         #endregion Fields
 
         #region Parameters
         [Parameter]
         public IEnumerable<TSource>? Source { get; set; }
+        [Parameter]
+        public List<Column>? ColumnLocalization { get; set; }
         #endregion Parameters
         public AutoTable()
         {
-
+            _columnSetting = new();
         }
 
         private List<Column> GetColumnConfig()
@@ -26,9 +27,15 @@ namespace SimpleTable.AutoTable
             try
             {
                 List<Column> colConfig = [];
-                ColumnSetting columnSetting = new();
-                colConfig = columnSetting.GetColumns(typeof(TSource));
-                return colConfig;
+                if (Source is not null)
+                {
+                    colConfig = _columnSetting.GetColumns(typeof(TSource), ColumnLocalization);
+                    return colConfig;
+                }
+                else
+                {
+                    throw new NullReferenceException();
+                }
             }
             catch (Exception)
             {
