@@ -4,7 +4,7 @@ using SimpleTable.TableConfig;
 
 namespace SimpleTable.AutoTable
 {
-    public partial class AutoTable<TSource>
+    public partial class AutoTable<TSource> where TSource : class
     {
         #region Fields
         private List<Column> _colConfig => GetColumnConfig();
